@@ -1,3 +1,5 @@
+__author__ = 'porthunt'
+
 from HTMLParser import HTMLParser
 
 class LinksParser(HTMLParser):
@@ -7,14 +9,16 @@ class LinksParser(HTMLParser):
     self.data = []
 
   def handle_starttag(self, tag, attributes):
-    if tag != 'div':
+    if tag != 'div' and tag != 'tr' and tag != 'td':
       return
     if self.recording:
       self.recording += 1
       return
     for name, value in attributes:
       if name == 'class' and value == 'TextBreak':
-        break
+          break
+      elif name == 'id' and value == 'masterBody_trMaker':
+          break
     else:
       return
     self.recording = 1
