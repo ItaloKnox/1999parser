@@ -8,6 +8,15 @@ For [box covers](http://www.1999.co.jp/eng/image/10334864p/10/1): /[product_code
 
 For [completed model photos](http://www.1999.co.jp/eng/image/10334864a/20/1): /[product_code]a/20/1 (>> /[product_code]a[2-99]/20/[2-99])
 
+# Required libraries
+>You may want to use Python 2.7 instead of 3.X.
+
+- HTMLParser
+- re 
+- datetime
+
+Use **pip install**
+
 # Code
 ```
 form
