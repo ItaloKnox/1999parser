@@ -7,7 +7,7 @@ class LinksParser(HTMLParser):
     self.data = []
 
   def handle_starttag(self, tag, attributes):
-    if tag != 'div':
+    if tag != 'div' and tag !='tr':
       return
     if self.recording:
       self.recording += 1
@@ -15,12 +15,22 @@ class LinksParser(HTMLParser):
     for name, value in attributes:
       if name == 'class' and value == 'TextBreak':
         break
+      elif name == 'id' and value == 'masterBody_trMaker':
+        break
+      elif name == 'id' and value == 'masterBody_trScale':
+        break
+      elif name == 'id' and value == 'masterBody_trSerieshin':
+        break
+      elif name == 'id' and value == 'masterBody_trSalseDate':
+        break
     else:
       return
     self.recording = 1
 
   def handle_endtag(self, tag):
     if tag == 'div' and self.recording:
+      self.recording -= 1
+    elif tag == 'tr' and self.recording:
       self.recording -= 1
 
   def handle_data(self, data):
