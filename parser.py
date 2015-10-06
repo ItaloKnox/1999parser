@@ -1,3 +1,5 @@
+__author__ = 'porthunt'
+
 from HTMLParser import HTMLParser
 
 class LinksParser(HTMLParser):
