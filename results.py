@@ -164,12 +164,12 @@ RELEASE DATE: Apr, 2011
 ####################################################
 http://www.1999.co.jp/eng/10011577
 
-#```Traceback (most recent call last):
+#Traceback (most recent call last):
 #  File "parse1999.py", line 69, in <module>
 #    gunpla = Gunpla(gunpla_id, lst)
 #  File "C:\1999parser\gunpla.py", line 11, in __init__
 #    self.release_date = re.sub(r'^\W*\w+\W*', '', lst[4]).replace('.', '')
-#IndexError: list index out of range```
+#IndexError: list index out of range
 
 #No release date = date error
 ####################################################
