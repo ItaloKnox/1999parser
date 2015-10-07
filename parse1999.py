@@ -8,13 +8,17 @@ def run_one(url):
     while(True):
         parser = LinksParser()
         page = requests.get(url.strip())
-        if page.status_code == 200:
-            parser.feed(page.text)
-            product = parser.parse_gunpla(parser.data)
-            if not product:
+        try:
+            if page.status_code == 200:
+                parser.feed(page.text)
+                product = parser.parse_gunpla(parser.data)
+                if not product:
+                    break
+                gunpla_id = url.split('/')[-1]
+                gunpla = Gunpla(gunpla_id, product)
                 break
-            gunpla_id = url.split('/')[-1]
-            gunpla = Gunpla(gunpla_id, product)
+        except ConnectionError:
+            print('Connection aborted.')
             break
     return gunpla
 
