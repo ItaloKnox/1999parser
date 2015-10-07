@@ -15,7 +15,7 @@ class Gunpla(object):
         if 'grade' in product:
             self.grade = product['grade']
         else:
-            self.grade = product['grade']
+            self.grade = ''
 
         if 'scale' in product:
             if product['scale'] == 'Non':
@@ -53,6 +53,13 @@ class Gunpla(object):
         self.release_date = self.release_date.upper()
 
     def __str__(self):
+        return ('ID: {} \nNAME: {} \nGRADE: {}\nMANUFACTURE: {} \n'
+                'SCALE: {} \nSERIES: {} \nRELEASE DATE: {}\n'
+                'DATE: {}'.format(self.id, self.name, self.grade,
+                self.manufacture, self.scale, self.series,
+                self.release_date, self.release_date_code))
+
+    def summary(self):
         return ('ID: {} \nNAME: {} \nGRADE: {}\nMANUFACTURE: {} \n'
                 'SCALE: {} \nSERIES: {} \nRELEASE DATE: {}\n'
                 'DATE: {}'.format(self.id, self.name, self.grade,
