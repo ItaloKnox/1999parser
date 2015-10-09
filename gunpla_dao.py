@@ -6,7 +6,6 @@ import datetime
 '''
 Adds the gunpla to the database.
 '''
-
 class GunplaDAO(object):
 
     #database: 'mobilesuit_db'

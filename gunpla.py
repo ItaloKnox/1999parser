@@ -17,13 +17,11 @@ Class that represents the gunpla.
 - release date: When it was released. Format: %b, %Y (e.g. Apr, 2015).
 - release date code (Date format): Date format of 'release date' variable.
 '''
-
 class Gunpla(object):
 
     '''
     Creates the gunpla object. Mandatory fields: id and name.
     '''
-
     def __init__(self, gunpla_id, product):
         self.id = gunpla_id
         self.name = re.sub(r'\([^)]*\)', '', product['name']).strip()
@@ -86,7 +84,6 @@ class Gunpla(object):
     '''
     Prints the gunpla information summarized.
     '''
-
     def summary(self):
         return ('ID: {} \nNAME: {} \nGRADE: {}\nMANUFACTURE: {} \n'
                 'SCALE: {} \nSERIES: {} \nRELEASE DATE: {}\n'
@@ -94,6 +91,9 @@ class Gunpla(object):
                 self.manufacture, self.scale, self.series,
                 self.release_date, self.release_date_code))
 
+    '''
+    Adds the gunpla to the database.
+    '''
     def insert(self):
         client = MongoClient()
         gunpla_dao = GunplaDAO()

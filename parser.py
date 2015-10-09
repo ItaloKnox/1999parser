@@ -5,7 +5,6 @@ from HTMLParser import HTMLParser
 '''
 Parses the website information.
 '''
-
 class LinksParser(HTMLParser):
   def __init__(self):
     HTMLParser.__init__(self)
@@ -47,7 +46,6 @@ class LinksParser(HTMLParser):
   Parses the item information. Verifies if the
   item is a gunpla and formats the item info.
   '''
-
   def parse_gunpla(self, parser_data):
       preorder = False
       lst = list()
