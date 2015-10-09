@@ -2,6 +2,10 @@ __author__ = 'porthunt'
 
 from HTMLParser import HTMLParser
 
+'''
+Parses the website information.
+'''
+
 class LinksParser(HTMLParser):
   def __init__(self):
     HTMLParser.__init__(self)
@@ -15,15 +19,15 @@ class LinksParser(HTMLParser):
       self.recording += 1
       return
     for name, value in attributes:
-      if name == 'class' and value == 'TextBreak':
+      if name == 'class' and value == 'TextBreak': #Name
         break
-      elif name == 'id' and value == 'masterBody_trMaker':
+      elif name == 'id' and value == 'masterBody_trMaker': #Manufacturer
         break
-      elif name == 'id' and value == 'masterBody_trScale':
+      elif name == 'id' and value == 'masterBody_trScale': #Scale
         break
-      elif name == 'id' and value == 'masterBody_trSerieshin':
+      elif name == 'id' and value == 'masterBody_trSerieshin': #Series
         break
-      elif name == 'id' and value == 'masterBody_trSalseDate':
+      elif name == 'id' and value == 'masterBody_trSalseDate': #Release Date
         break
     else:
       return
@@ -39,6 +43,11 @@ class LinksParser(HTMLParser):
     if self.recording:
       self.data.append(data)
 
+  '''
+  Parses the item information. Verifies if the
+  item is a gunpla and formats the item info.
+  '''
+
   def parse_gunpla(self, parser_data):
       preorder = False
       lst = list()
@@ -47,6 +56,9 @@ class LinksParser(HTMLParser):
 
           if item.strip() != '' and item.strip() != ':' and item.strip() != ',':
               lst.append(item)
+
+      if 'Gundam Model Kits' not in lst[0]:
+          raise ValueError('It is not a gundam model kit.')
 
       if 'Pre-order' in lst[-1]:
           preorder = True
