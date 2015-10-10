@@ -1,3 +1,4 @@
+pip install --upgrade pip
 pip install datetime
 pip install HTMLParser
 pip install pymongo
