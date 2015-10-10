@@ -1,0 +1,6 @@
+pip install datetime
+pip install HTMLParser
+pip install pymongo
+pip install pytz
+pip install re
+pip install requests
