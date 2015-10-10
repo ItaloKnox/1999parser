@@ -2,6 +2,7 @@ __author__ = 'porthunt'
 
 from gunpla import Gunpla
 from HTMLParser import HTMLParser
+import datetime
 import requests
 
 
@@ -120,8 +121,23 @@ class LinksParser(HTMLParser):
 
                   gunpla_id = url.split('/')[-1]
                   gunpla = Gunpla(gunpla_id, product)
-                  gunpla.insert()
-                  break
+                  #Check if already on the database
+                  if gunpla.find() == None:
+                      gunpla.insert()
+                      break
+                  else:
+                     gunpla_found = gunpla.find()
+                     diff = datetime.datetime.now() - gunpla_found.added
+                     if  diff.total_seconds() >= 86400: # one month
+                        try:
+                            gunpla.update()
+                            print('Gunpla updated because the info '
+                                  'was more than one month old.\n')
+                        except:
+                            print('Error updating gunpla info.')
+                     else:
+                         print('Info is recent. Update was not made.\n')
+                     break
           except requests.ConnectionError:
               print('Connection aborted.')
               break

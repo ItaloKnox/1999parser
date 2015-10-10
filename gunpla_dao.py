@@ -29,12 +29,12 @@ class GunplaDAO(object):
                      }
 
         database = client.mobilesuit_db
-        try:
-            result = database.mobilesuit.insert_one(gunpla_dic)
-            return result
-        except pymongo.errors.DuplicateKeyError:
-            raise ValueError('Duplicate entry on the database.')
-        except pymongo.errors.ExecutionTimeout:
-            raise ValueError('Could not connect to the database.')
-        except:
-            raise ValueError('Could not insert to the collection.')
+        return database.mobilesuit.insert_one(gunpla_dic)
+
+    def find(self, client, gunpla):
+        database = client.mobilesuit_db
+        return database.mobilesuit.find_one({"item_id": gunpla.id})
+
+    def remove(self, client, gunpla):
+        database = client.mobilesuit_db
+        return database.mobilesuit.remove({"item_id": gunpla.id})

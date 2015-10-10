@@ -103,5 +103,46 @@ class Gunpla(object):
             print('{} registered succesfully. ObjectID: {}.'
                   .format(self.name, gunpla_dao.insert(client, self)
                   .inserted_id))
-        except:
-            print('Error while inserting item.')
+        except pymongo.errors.ExecutionTimeout:
+            print('Error while inserting item. Execution Timeout.')
+        except Exception:
+            print('Error while inserting item: {}'.format(Exception))
+
+    '''
+    Finds if a gunpla is already on the database.
+    '''
+    def find(self):
+        client = MongoClient()
+        gunpla_dao = GunplaDAO()
+        gunpla_found = gunpla_dao.find(client, self)
+        if gunpla_found == None:
+            return None
+        else:
+            self.id = gunpla_found['item_id']
+            self.name = gunpla_found['name']
+            self.manufacture = gunpla_found['manufacture']
+            self.grade = gunpla_found['grade']
+            self.scale = gunpla_found['scale']
+            self.series = gunpla_found['series']
+            self.release_date = gunpla_found['release date']
+            self.release_date_code = gunpla_found['release date code']
+            self.added = gunpla_found['added']
+        return self
+
+    '''
+    Removes a gunpla from the database.
+    '''
+    def remove(self):
+        client = MongoClient()
+        gunpla_dao = GunplaDAO()
+        if not gunpla_dao.remove(client, self):
+            return True
+        else:
+            return False
+
+    '''
+    Updates a gunpla on the database.
+    '''
+    def update(self):
+        self.remove()
+        self.insert()

@@ -9,15 +9,15 @@ from screens import Screens
 
 screens = Screens()
 
+screens.welcome_screen()
 while True:
-    screens.welcome_screen()
-    user_input = raw_input('Select your option: ')
+    user_input = raw_input('Select your option ([P], [T], [A], [E]): ')
 
     #Production
     if user_input.upper() == 'P':
+        screens.production_screen()
         while True:
-            screens.production_screen()
-            user_input = raw_input('Select your option: ')
+            user_input = raw_input('Select your option ([E]): ')
 
             if user_input.upper() == 'E':
                 break
@@ -25,9 +25,9 @@ while True:
     #Testing
     elif user_input.upper() == 'T':
         parser = LinksParser()
+        screens.testing_screen()
         while True:
-            screens.testing_screen()
-            user_input = raw_input('Select your option: ')
+            user_input = raw_input('Select your option ([O], [L], [E]): ')
 
             #One Test
             if user_input.upper() == 'O':
@@ -48,9 +48,9 @@ while True:
 
     #Analysis
     elif user_input.upper() == 'A':
+        screens.analysis_screen()
         while True:
-            screens.analysis_screen()
-            user_input = raw_input('Select your option: ')
+            user_input = raw_input('Select your option ([E]): ')
 
             if user_input.upper() == 'E':
                 break
