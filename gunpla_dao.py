@@ -1,7 +1,8 @@
 __author__ = 'porthunt'
 
-from pymongo import MongoClient
 import datetime
+from pymongo import MongoClient
+
 
 '''
 Adds the gunpla to the database.

@@ -1,10 +1,11 @@
 __author__ = 'porthunt'
 
-from pymongo import MongoClient
-from gunpla_dao import GunplaDAO
-import re
 import datetime
+from gunpla_dao import GunplaDAO
+from pymongo import MongoClient
 import pytz
+import re
+
 
 '''
 Class that represents the gunpla.
@@ -65,8 +66,9 @@ class Gunpla(object):
         except:
             self.release_date_code = None
 
-        utc_release_date = pytz.utc.localize(self.release_date_code)
-        self.release_date_code = utc_release_date
+        if self.release_date_code != None:
+            utc_release_date = pytz.utc.localize(self.release_date_code)
+            self.release_date_code = utc_release_date
 
         self.name = self.name.upper()
         self.manufacture = self.manufacture.upper()

@@ -1,6 +1,9 @@
 __author__ = 'porthunt'
 
+from gunpla import Gunpla
 from HTMLParser import HTMLParser
+import requests
+
 
 '''
 Parses the website information.
@@ -90,3 +93,49 @@ class LinksParser(HTMLParser):
 
 
       return gunpla
+
+  '''
+  Returns the item of the given URL.
+  '''
+  def run_one(self, url):
+      gunpla = None
+      while(True):
+          page = requests.get(url.strip())
+          try:
+              if page.status_code == 200:
+                  self.feed(page.text)
+
+                  if not self.data: # check if it parsed nothing
+                      break
+
+                  try:
+                      product = self.parse_gunpla(self.data)
+                  except ValueError:
+                      print('{} is not a gunpla model.'.
+                            format(url.split('/')[-1]))
+                      return None
+
+                  if not product:
+                      break
+
+                  gunpla_id = url.split('/')[-1]
+                  gunpla = Gunpla(gunpla_id, product)
+                  gunpla.insert()
+                  break
+          except requests.ConnectionError:
+              print('Connection aborted.')
+              break
+      return gunpla
+
+  '''
+  Runs a list of URLs inside a file.
+  '''
+  def run_list(self, file_path, extension):
+      url_list = open(file_path+extension, 'r')
+      url_list_results = open(file_path+'_results'+extension, 'w')
+      for item in url_list:
+          gunpla = self.run_one(item)
+          print(gunpla.summary())
+          url_list_results.write(gunpla.summary())
+          print('==================')
+          url_list_results.write('\n==================\n')
