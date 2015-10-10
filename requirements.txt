@@ -1,6 +1,5 @@
-pip install datetime
-pip install HTMLParser
-pip install pymongo
-pip install pytz
-pip install re
-pip install requests
+datetime==4.0.1
+HTMLParser==0.0.2
+pymongo==3.0.3
+pytz==2013.7
+requests==2.7.0
