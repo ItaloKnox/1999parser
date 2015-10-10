@@ -60,7 +60,7 @@ class LinksParser(HTMLParser):
               lst.append(item)
 
       if 'Gundam Model Kits' not in lst[0]:
-          raise ValueError('It is not a gundam model kit.')
+          return 'Not a gunpla model.'
 
       if 'Pre-order' in lst[-1]:
           preorder = True
@@ -100,30 +100,30 @@ class LinksParser(HTMLParser):
   '''
   def run_one(self, url):
       gunpla = None
+      parser = LinksParser()
       while(True):
           page = requests.get(url.strip())
           try:
               if page.status_code == 200:
-                  self.feed(page.text)
-
-                  if not self.data: # check if it parsed nothing
+                  parser.feed(page.text)
+                  if not parser.data: # check if it parsed nothing
+                      print('Item {} doesn\'t exist.'.
+                            format(url.split('/')[-1]))
                       break
 
-                  try:
-                      product = self.parse_gunpla(self.data)
-                  except ValueError:
+                  product = parser.parse_gunpla(parser.data)
+
+                  if product == 'Not a gunpla model.':
                       print('{} is not a gunpla model.'.
                             format(url.split('/')[-1]))
                       return None
-
-                  if not product:
-                      break
 
                   gunpla_id = url.split('/')[-1]
                   gunpla = Gunpla(gunpla_id, product)
                   #Check if already on the database
                   if gunpla.find() == None:
                       gunpla.insert()
+                      #print(gunpla.summary())
                       break
                   else:
                      gunpla_found = gunpla.find()
