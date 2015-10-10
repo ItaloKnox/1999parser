@@ -29,8 +29,9 @@ For [completed model photos](http://www.1999.co.jp/eng/image/10334864a/20/1): /[
 Use **pip install**
 
 # Required steps
-> Install MongoDB (Mongo Shell > 3.X)
-> Create an index on the database:
-  > use mobilesuit_db
-  > db.mobilesuit.createIndex({'item_id' : 1}, {'unique' : 1})
+* Install MongoDB (Mongo Shell > 3.X).
+* Create an index on the database:
+  * *$ mongo* 
+  * *> use mobilesuit_db*
+  * *> db.mobilesuit.createIndex({'item_id' : 1}, {'unique' : 1})*
 
