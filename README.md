@@ -1,4 +1,4 @@
-# 1999parser
+# 1999parser ![alt tag](https://travis-ci.org/ItaloKnox/1999parser.svg?branch=master)
 Tool to compile data about 1999.co.jp products and insert them on a MongoDB database. Built for gundam plastic models.
 
 # Parsed info
