@@ -11,26 +11,11 @@ For [completed model photos](http://www.1999.co.jp/eng/image/10334864a/20/1): /[
 # Required libraries
 >You may want to use Python 2.7 instead of 3.X.
 
-- HTMLParser
-- re 
 - datetime
+- HTMLParser
+- pymongo
+- pytz
+- re
+- requests
 
 Use **pip install**
-
-# Code
-```
-form
-    div .whole
-        div .right
-            table #masterBody_tblItemHeader -> MOBILE SUIT NAME
-            table #masterBody_tblItemImg
-                table #masterBody_tblItemInfo
-                    tr #masterBody_trMaker -> MANUFACTURE
-                    tr #masterBody_trScale -> SCALE
-                    tr #masterBody_trSeries -> SERIES
-                    tr #masterBody_trSerieshin -> TV SHOW
-                    tr #masterBody_trSalseDate -> RELEASE DATE
-                    tr #masterBody_trSalseDate -> PRICE
-            div #masterBody_pnlImgCa
-                td #gazotitle_box -> TYPE OF PHOTO
-```
