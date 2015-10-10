@@ -1,5 +1,5 @@
 # 1999parser
-Tool to compile data about 1999.co.jp products. Built for gundam plastic models.
+Tool to compile data about 1999.co.jp products and insert them on a MongoDB database. Built for gundam plastic models.
 
 # Parsed info
 - Name
@@ -27,3 +27,10 @@ For [completed model photos](http://www.1999.co.jp/eng/image/10334864a/20/1): /[
 - requests
 
 Use **pip install**
+
+# Required steps
+> Install MongoDB (Mongo Shell > 3.X)
+> Create an index on the database:
+  > use mobilesuit_db
+  > db.mobilesuit.createIndex({'item_id' : 1}, {'unique' : 1})
+
