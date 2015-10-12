@@ -1,15 +1,14 @@
-__author__ = 'porthunt'
-
 import datetime
 from gunpla_dao import GunplaDAO
-from pymongo import MongoClient
 import pytz
 import re
 
+__author__ = 'porthunt'
 
 '''
 Class that represents the gunpla.
-- id: URL from the 1999.co.jp website (e.g. http://www.1999.co.jp/eng/10310668).
+- id: URL from the 1999.co.jp website
+- (e.g. http://www.1999.co.jp/eng/10310668).
 - name: item's name without the parenthesis text.
 - manufacture: manufacturer of the item.
 - grade: FG, SD, HG, MG, RG, PG, RE/100
@@ -18,11 +17,14 @@ Class that represents the gunpla.
 - release date: When it was released. Format: %b, %Y (e.g. Apr, 2015).
 - release date code (Date format): Date format of 'release date' variable.
 '''
+
+
 class Gunpla(object):
 
     '''
     Creates the gunpla object. Mandatory fields: id and name.
     '''
+
     def __init__(self, gunpla_id, product):
         self.id = gunpla_id
         self.name = re.sub(r'\([^)]*\)', '', product['name']).strip()
@@ -52,8 +54,12 @@ class Gunpla(object):
 
         if 'release date' in product:
             if product['release date'] != 'Pre-Order':
-                self.release_date = re.sub(r'^\W*\w+\W*', '',
-                                    product['release date']).replace('.', '')
+                self.release_date = re.sub(
+                    r'^\W*\w+\W*',
+                    '',
+                    product['release date']).replace(
+                    '.',
+                    '')
             else:
                 self.release_date = 'Not yet released'
         else:
@@ -61,12 +67,12 @@ class Gunpla(object):
 
         try:
             self.release_date_code = datetime.datetime.strptime(
-                                     self.release_date,
-                                     '%b, %Y')
+                self.release_date,
+                '%b, %Y')
         except:
             self.release_date_code = None
 
-        if self.release_date_code != None:
+        if self.release_date_code is not None:
             utc_release_date = pytz.utc.localize(self.release_date_code)
             self.release_date_code = utc_release_date
 
@@ -80,29 +86,30 @@ class Gunpla(object):
         return ('ID: {} \nNAME: {} \nGRADE: {}\nMANUFACTURE: {} \n'
                 'SCALE: {} \nSERIES: {} \nRELEASE DATE: {}\n'
                 'DATE: {}'.format(self.id, self.name, self.grade,
-                self.manufacture, self.scale, self.series,
-                self.release_date, self.release_date_code))
+                                  self.manufacture, self.scale, self.series,
+                                  self.release_date, self.release_date_code))
 
     '''
     Prints the gunpla information summarized.
     '''
+
     def summary(self):
         return ('ID: {} \nNAME: {} \nGRADE: {}\nMANUFACTURE: {} \n'
                 'SCALE: {} \nSERIES: {} \nRELEASE DATE: {}\n'
                 'DATE: {}'.format(self.id, self.name, self.grade,
-                self.manufacture, self.scale, self.series,
-                self.release_date, self.release_date_code))
+                                  self.manufacture, self.scale, self.series,
+                                  self.release_date, self.release_date_code))
 
     '''
     Adds the gunpla to the database.
     '''
+
     def insert(self):
-        client = MongoClient()
         gunpla_dao = GunplaDAO()
         try:
             print('{} registered succesfully. ObjectID: {}.'
-                  .format(self.name, gunpla_dao.insert(client, self)
-                  .inserted_id))
+                  .format(self.name, gunpla_dao.insert(self)
+                          .inserted_id))
         except pymongo.errors.ExecutionTimeout:
             print('Error while inserting item. Execution Timeout.')
         except Exception:
@@ -111,11 +118,11 @@ class Gunpla(object):
     '''
     Finds if a gunpla is already on the database.
     '''
+
     def find(self):
-        client = MongoClient()
         gunpla_dao = GunplaDAO()
-        gunpla_found = gunpla_dao.find(client, self)
-        if gunpla_found == None:
+        gunpla_found = gunpla_dao.find(self)
+        if gunpla_found is None:
             return None
         else:
             self.id = gunpla_found['item_id']
@@ -132,10 +139,10 @@ class Gunpla(object):
     '''
     Removes a gunpla from the database.
     '''
+
     def remove(self):
-        client = MongoClient()
         gunpla_dao = GunplaDAO()
-        if not gunpla_dao.remove(client, self):
+        if not gunpla_dao.remove(self):
             return True
         else:
             return False
@@ -143,6 +150,7 @@ class Gunpla(object):
     '''
     Updates a gunpla on the database.
     '''
+
     def update(self):
         self.remove()
         self.insert()

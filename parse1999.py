@@ -1,12 +1,10 @@
-__author__ = 'porthunt'
-
 from parser import LinksParser
 from screens import Screens
 import datetime
 
-############
-#   MAIN   #
-############
+__author__ = 'porthunt'
+
+# Main
 
 screens = Screens()
 
@@ -14,12 +12,13 @@ screens.welcome_screen()
 while True:
     user_input = raw_input('Select your option ([P], [T], [A], [E]): ')
 
-    #Production
+    # Production
     if user_input.upper() == 'P':
         screens.production_screen()
         while True:
             user_input = raw_input('Select your option ([E]): ')
 
+            # Exit
             if user_input.upper() == 'E':
                 break
 
@@ -28,7 +27,7 @@ while True:
                 fmt = '%Y-%m-%d %H:%M:%S'
                 now = datetime.datetime.now()
                 print('Started at {}'.format(now.strftime(fmt)))
-                for _ in range (10350000,10350200):
+                for _ in range(10350000, 10350200):
                     url = 'http://www.1999.co.jp/eng/{}'.format(_)
                     print(url)
                     gunpla = parser.run_one(url)
@@ -39,19 +38,19 @@ while True:
                       .format(diff.total_seconds()))
                 break
 
-    #Testing
+    # Testing
     elif user_input.upper() == 'T':
         parser = LinksParser()
         screens.testing_screen()
         while True:
             user_input = raw_input('Select your option ([O], [L], [E]): ')
 
-            #One Test
+            # One Test
             if user_input.upper() == 'O':
                 url = raw_input('Type the URL: ')
                 gunpla = parser.run_one(url)
 
-            #Bulk Test
+            # Bulk Test
             elif user_input.upper() == 'L':
                 file_path = raw_input('File name: ')
                 extension = raw_input('Extension: ')
@@ -59,11 +58,11 @@ while True:
                     extension = '.'+extension
                 parser.run_list(file_path, extension)
 
-            #Exit
+            # Exit
             elif user_input.upper() == 'E':
                 break
 
-    #Analysis
+    # Analysis
     elif user_input.upper() == 'A':
         screens.analysis_screen()
         while True:
@@ -72,7 +71,7 @@ while True:
             if user_input.upper() == 'E':
                 break
 
-    #Exit
+    # Exit
     elif user_input.upper() == 'E':
         print('Bye!')
         exit()
